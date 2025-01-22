@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 from typing import List
 from uuid import uuid4
 
@@ -16,7 +16,7 @@ class UserModels(Base):
     lastname =  Column(String(30))
     password =  Column(String(30))
 
-    accounts = relationship("AccountsModels")
+    accounts = relationship("AccountsModels", back_populates="usermodels", uselist=False)
 
 
 class AccountsModels(Base):
@@ -25,9 +25,10 @@ class AccountsModels(Base):
     type = Column(String(30))
     balance =  Column(Integer)
 
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, unique=True)
 
     transactions = relationship("TransactionsModels")
+    user = relationship("UserModels", backref=backref("accountmodels", uselist=False))
 
 
 class CategoriesModels(Base):
@@ -43,8 +44,9 @@ class CategoriesModels(Base):
 class TransactionsModels(Base):
     __tablename__= "transactions"
     id = Column(Integer, primary_key=True, autoincrement=True)
+    paymentreason = Column(String(50), nullable=False)
     created = Column(DateTime, default=datetime.now())
-    amount = Column(Integer)
+    amount = Column(Integer, nullable=False)
 
     account_id = Column(Integer, ForeignKey("accounts.id"), nullable=False)
     category_id = Column(Integer, ForeignKey("categories.id"), nullable=False)
