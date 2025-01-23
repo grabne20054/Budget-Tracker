@@ -11,12 +11,11 @@ from database.config import Base
 # Create User class
 class UserModels(Base):
     __tablename__ = "users"
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    firstname =  Column(String(30))
-    lastname =  Column(String(30))
+    username = Column(String(30), primary_key=True, unique=True)
     password =  Column(String(30))
 
-    accounts = relationship("AccountsModels", back_populates="usermodels", uselist=False)
+    account_id = Column(Integer, ForeignKey("accounts.id"), nullable=False, unique=True)
+    accounts = relationship("AccountsModels", backref=backref("usermodels", uselist=False))
 
 
 class AccountsModels(Base):
@@ -24,11 +23,6 @@ class AccountsModels(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     type = Column(String(30))
     balance =  Column(Integer)
-
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, unique=True)
-
-    transactions = relationship("TransactionsModels")
-    user = relationship("UserModels", backref=backref("accountmodels", uselist=False))
 
 
 class CategoriesModels(Base):
