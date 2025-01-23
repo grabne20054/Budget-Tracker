@@ -6,17 +6,10 @@ from pydantic import BaseModel
 
 
 class Base(BaseModel):
-    username: str
-    birthday: date
+    username:str
+    account_id: int
 
 
 class Register(Base):
     password: str
 
-
-class Password(BaseModel):
-    password: str
-
-
-class Birthday(BaseModel):
-    birthday: date
