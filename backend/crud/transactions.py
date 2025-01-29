@@ -21,8 +21,8 @@ class TransactionCRUD:
         transactions = result.scalars().all()
         return transactions
     
-    async def get_transactions_by_category(self, category_id: int):
-        stmt = select(TransactionsModels).where(TransactionsModels.category_id == category_id)
+    async def get_transactions_by_category_and_account(self, category_id: int, account_id: int):
+        stmt = select(TransactionsModels).where(TransactionsModels.category_id == category_id, TransactionsModels.account_id == account_id)
         result = await self.db_session.execute(stmt)
         transactions = result.scalars().all()
         return transactions

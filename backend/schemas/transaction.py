@@ -13,3 +13,14 @@ class Base(BaseModel):
     account_id: int
     category_id: int
 
+class UpdatePaymentReason(Base):
+    paymentreason: str
+
+class UpdateAmount(Base):
+    amount: int
+
+class UpdateCategory(Base):
+    category_id: int
+
+
+

@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
 
 from auth.utils import get_password_hash
-from models.user import UserModels
+from models.model import UserModels, AccountsModels, CategoriesModels, TransactionsModels
 import schemas.user as user_schema
 
 
