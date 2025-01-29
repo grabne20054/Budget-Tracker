@@ -1,11 +1,16 @@
 from datetime import datetime
 
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
+import enum
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Enum
 from sqlalchemy.orm import relationship, backref
 from typing import List
 from uuid import uuid4
 
 from database.config import Base
+
+class AccountTypes(enum.Enum):
+    GIRO = "giro"
+    PROFIT = "profit"
 
 
 # Create User class
@@ -21,7 +26,7 @@ class UserModels(Base):
 class AccountsModels(Base):
     __tablename__ = "accounts"
     id = Column(Integer, primary_key=True, autoincrement=True)
-    type = Column(String(30))
+    type = Column('type', Enum(AccountTypes))
     balance =  Column(Integer)
 
 
