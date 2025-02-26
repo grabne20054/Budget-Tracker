@@ -4,7 +4,6 @@ from sqlalchemy import select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
 
-from auth.utils import get_password_hash
 from models.model import CategoriesModels
 import schemas.categories as categories_schema
 
@@ -34,7 +33,7 @@ class CategoriesCRUD:
         stmt = (
             update(CategoriesModels)
             .where(CategoriesModels.id == category_id)
-            .values(CategoriesModels.name == name)
+            .values(name=name)
             
         )
         
@@ -46,7 +45,7 @@ class CategoriesCRUD:
         stmt = (
             update(CategoriesModels)
             .where(CategoriesModels.id == category_id)
-            .values(CategoriesModels.description == description)
+            .values(description=description)
         )
 
         stmt.execution_options(synchronize_session="fetch")

@@ -6,6 +6,7 @@ from typing import List
 
 from auth.utils import get_password_hash
 from models.model import TransactionsModels
+from crud.accounts import AccountsCRUD
 import schemas.transaction as transaction_schema
 
 
@@ -14,6 +15,7 @@ class TransactionCRUD:
 
     def __init__(self, db_session: AsyncSession = None):
         self.db_session = db_session
+        self.accounts_crud = AccountsCRUD(db_session)
 
     async def get_transcations_by_account(self, account_id: int):
         stmt = select(TransactionsModels).where(TransactionsModels.account_id == account_id)
@@ -33,11 +35,13 @@ class TransactionCRUD:
             created=transaction.created,
             amount=transaction.amount,
             account=transaction.account_id,
-            category=transaction.category_id
+            category=transaction.category_id,
+            finished=False
         )
 
         self.db_session.add(TransactionsModels)
         await self.db_session.commit()
+        self.accounts_crud.update_balance(transaction)
         return transaction
 
     async def update_paymentreason(self, transaction_id:int, paymentreason:str):
