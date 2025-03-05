@@ -15,15 +15,15 @@ class AccountsCRUD:
     def __init__(self, db_session: AsyncSession = None):
         self.db_session = db_session
 
-    async def get_account_of_user(self, username: str):
+    async def get_account_of_user(self, username: str) -> account_schema.Base:
         stmt = select(AccountsModels).where(AccountsModels.username == username)
         result = await self.db_session.execute(stmt)
-        account = result.scalars().all()
+        account = result.scalars().first()
         return account
 
-    async def create_account(self, account: account_schema.Base):
+    async def create_account(self, username: str):
         account = AccountsModels(
-            username=account.username,
+            username=username,
             balance=0
         )
 
@@ -41,8 +41,11 @@ class AccountsCRUD:
         await self.db_session.execute(stmt)
 
     async def delete_account_of_user(self, username: str):
-        account = self.get_account_of_user(username=username)
+        account = await self.get_account_of_user(username=username)
+        if not account:
+            return None
 
-        stmt = delete(AccountsModels).where(AccountsModels.id == account.id)
+        stmt = delete(AccountsModels).where(AccountsModels.username == account.username)
         stmt.execution_options(synchronize_session="fetch")
         await self.db_session.execute(stmt)
+        return account
