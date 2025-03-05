@@ -4,10 +4,6 @@ from pydantic import BaseModel
 
 class Base(BaseModel):
     name: str
-    description:str
 
-class UpdateName(Base):
-    name:str
-
-class UpdateDescription(Base):
-    description:str
+class Register(Base):
+    description: str
