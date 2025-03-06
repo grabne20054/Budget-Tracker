@@ -1,16 +1,16 @@
 from datetime import datetime
 
 from pydantic import BaseModel
+from typing import Literal
 
 # User Schema
 
 
 class Base(BaseModel):
     paymentreason: str
-    created: datetime
     amount: int
-
-    account_id: int
+    type: Literal["expense", "income"]
+    
     category_id: int
 
 class UpdatePaymentReason(Base):

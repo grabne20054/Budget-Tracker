@@ -32,11 +32,18 @@ class AccountsCRUD:
         return account
 
     async def update_balance(self, transaction: TransactionsModels):
-        stmt = (
-            update(AccountsModels)
-            .where(AccountsModels.id == transaction.account_id)
-            .values(balance=AccountsModels.balance + transaction.amount)
-        )
+        if transaction.type == "expense":
+            stmt = (
+                update(AccountsModels)
+                .where(AccountsModels.id == transaction.account_id)
+                .values(balance=AccountsModels.balance - transaction.amount)
+            )
+        elif transaction.type == "income":
+            stmt = (
+                update(AccountsModels)
+                .where(AccountsModels.id == transaction.account_id)
+                .values(balance=AccountsModels.balance + transaction.amount)
+            )
         stmt.execution_options(synchronize_session="fetch")
         await self.db_session.execute(stmt)
 
@@ -49,3 +56,19 @@ class AccountsCRUD:
         stmt.execution_options(synchronize_session="fetch")
         await self.db_session.execute(stmt)
         return account
+    
+    async def revert_balance(self, transaction: TransactionsModels):
+        if transaction.type == "expense":
+            stmt = (
+                update(AccountsModels)
+                .where(AccountsModels.id == transaction.account_id)
+                .values(balance=AccountsModels.balance + transaction.amount)
+            )
+        elif transaction.type == "income":
+            stmt = (
+                update(AccountsModels)
+                .where(AccountsModels.id == transaction.account_id)
+                .values(balance=AccountsModels.balance - transaction.amount)
+            )
+        stmt.execution_options(synchronize_session="fetch")
+        await self.db_session.execute(stmt)

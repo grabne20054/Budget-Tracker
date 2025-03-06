@@ -9,11 +9,12 @@ from uuid import uuid4
 from database.config import Base
 
 
+
 # Create User class
 class UserModels(Base):
     __tablename__ = "users"
-    username = Column(String(30), primary_key=True, unique=True)
-    password =  Column(String(30))
+    username = Column(String(100), primary_key=True, unique=True)
+    password =  Column(String(100))
 
 
 
@@ -33,6 +34,9 @@ class CategoriesModels(Base):
     name = Column(String(30))
     description = Column(String(100))
 
+    username = Column(String(30), ForeignKey("users.username"), nullable=False)
+    user = relationship("UserModels", backref=backref("categoriesmodels", uselist=True))
+
     transactions = relationship("TransactionsModels")
 
 
@@ -43,6 +47,7 @@ class TransactionsModels(Base):
     created = Column(DateTime, default=datetime.now())
     amount = Column(Integer, nullable=False)
     finished = Column(Boolean)
+    type = Column(String(10), nullable=False)
 
     account_id = Column(Integer, ForeignKey("accounts.id"), nullable=False)
     category_id = Column(Integer, ForeignKey("categories.id"), nullable=False)
