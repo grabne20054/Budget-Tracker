@@ -13,8 +13,8 @@ class CategoriesCRUD:
     def __init__(self, db_session: AsyncSession = None):
         self.db_session = db_session
 
-    async def get_categories(self) -> List[categories_schema.Base]:
-        stmt = select(CategoriesModels)
+    async def get_categories(self, username: str) -> List[categories_schema.Base]:
+        stmt = select(CategoriesModels).where(CategoriesModels.username == username)
         result = await self.db_session.execute(stmt)
         categories = result.scalars().all()
         return categories

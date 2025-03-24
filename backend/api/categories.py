@@ -21,9 +21,9 @@ async def create(
 
 @router.get("")
 async def get_categories(
-    db: CategoriesCRUD = Depends(get_category_crud)
+    db: CategoriesCRUD = Depends(get_category_crud), current_user: user_schema.Base = Depends(get_current_user)
 ):
-   categories = await db.get_categories()
+   categories = await db.get_categories(current_user.username)
 
    return categories
 
