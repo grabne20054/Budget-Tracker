@@ -1,5 +1,5 @@
 import { reactive } from "vue";
-import { apiGetCategories, apiPostCategory } from "../api/categories.js";
+import { apiDeleteCategory, apiGetCategories, apiPostCategory } from "../api/categories.js";
 import { useLoadingStore } from "./loading";
 import { useDialogStore } from "./dialog";
 import { useAuthStore } from "../store/auth.js";
@@ -67,5 +67,34 @@ async function registerCategory(form){
   });
 }
 
+async function deleteCategory(id) {
+  const loadingStore = useLoadingStore();
+  const dialogStore = useDialogStore();
+  loadingStore.setLoading();
 
-export { useFetchCategories, registerCategory};
+  apiDeleteCategory(id)
+  .then((res) => {
+    console.log(res);
+    dialogStore.setSuccess({
+      title: "Delete Category Success",
+      secondLine: "This dialog will close in 2 seconds",
+    });
+  })
+  .catch((err) => {
+    
+      dialogStore.setError({
+        title: "Delete Category Failed",
+        secondLine: "This dialog will close in 2 seconds",
+      });
+
+  })
+  .finally(() => {
+    loadingStore.clearLoading();
+    setTimeout(() => {
+      dialogStore.reset();
+    }, 2000);
+  });
+}
+
+
+export { useFetchCategories, registerCategory, deleteCategory};

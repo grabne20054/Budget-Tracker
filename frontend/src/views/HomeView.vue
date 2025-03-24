@@ -18,9 +18,12 @@
                         <th scope="col">Category</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr v-for="(category, idx) in categoriesList.value" :key="idx">
+                <tbody style="max-height: 300px; overflow-y: auto; display: block;">
+                    <tr v-for="(category, idx) in categoriesList?.value || []" :key="category.id || idx" style="display: table; width: 100%; table-layout: fixed;">
                         <th scope="row">{{ category.name }}</th>
+                        <td>
+                            <button class="btn btn-primary" @click="removeCategory(category.id)">Delete</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -33,13 +36,16 @@
                 </div>
             </div>
         </div>
+
+        
     </div>
 </template>
   
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useFetchAccounts, registerAccount } from '../store/accounts';
-import { useFetchCategories, registerCategory } from '../store/categories';
+import { useFetchCategories, registerCategory, deleteCategory } from '../store/categories';
+import router from '../router';
 
 let { accountList } = useFetchAccounts();
 let { categoriesList } = useFetchCategories();
@@ -57,7 +63,13 @@ const addCategory = async () => {
     await registerCategory(categoryForm.value);
     categoryForm.value.name = '';
     categoryForm.value.description = '';
+    router.push('/refresh');
 };
+
+const removeCategory = async id => {
+    await deleteCategory(id);
+    router.push('/refresh');
+}
 
 const submit = async () => {
     await registerAccount();
