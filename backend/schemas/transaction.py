@@ -8,7 +8,7 @@ from typing import Literal
 
 class Base(BaseModel):
     paymentreason: str
-    amount: int
+    amount: float
     type: Literal["expense", "income"]
     
     category_id: int
@@ -17,7 +17,7 @@ class UpdatePaymentReason(Base):
     paymentreason: str
 
 class UpdateAmount(Base):
-    amount: int
+    amount: float
 
 class UpdateCategory(Base):
     category_id: int

@@ -15,8 +15,7 @@ router = APIRouter(prefix="/accounts", tags=["accounts"])
 @router.post("")
 async def create(
     current_user: user_schema.Base = Depends(get_current_user), db: AccountsCRUD = Depends(get_account_crud)
-):
-    print(current_user.username)
+) -> account_schema.Base:
     if await db.get_account_of_user(username=current_user.username):
         raise HTTPException(status_code=400, detail="Only one account possible per user")
     else:
@@ -36,7 +35,7 @@ async def delete(
 @router.get("")
 async def get_account(
     current_user: user_schema.Base = Depends(get_current_user), db: AccountsCRUD = Depends(get_account_crud)
-):
+) -> account_schema.Base:
     account = await db.get_account_of_user(username=current_user.username)
 
     return account

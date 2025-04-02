@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import enum
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Enum, Boolean
+from sqlalchemy import Column, ForeignKey, Double, Integer, String, DateTime, Enum, Boolean
 from sqlalchemy.orm import relationship, backref
 from typing import List
 from uuid import uuid4
@@ -21,7 +21,7 @@ class UserModels(Base):
 class AccountsModels(Base):
     __tablename__ = "accounts"
     id = Column(Integer, primary_key=True, autoincrement=True)
-    balance =  Column(Integer)
+    balance =  Column(Double, default=0.0)
 
     username = Column(String(30), ForeignKey("users.username"), nullable=False, unique=True)
     user = relationship("UserModels", backref=backref("accountsmodels", uselist=False))

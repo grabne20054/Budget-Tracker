@@ -1,5 +1,5 @@
 from pydantic import BaseModel
 
 class Base(BaseModel):
-    username: str
-    balance: int
+    balance: float
+

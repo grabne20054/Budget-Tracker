@@ -24,7 +24,7 @@ class AccountsCRUD:
     async def create_account(self, username: str):
         account = AccountsModels(
             username=username,
-            balance=0
+            balance=0.0
         )
 
         self.db_session.add(account)
