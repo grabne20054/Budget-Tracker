@@ -2,7 +2,7 @@
     <header>
         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
             <div class="container">
-                 <router-link class="navbar-brand" to="/">Demo</router-link> 
+                 <router-link class="navbar-brand" to="/">Budget Tracker</router-link> 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -23,6 +23,9 @@
                         </li>
                         <li class="nav-item">
                             <router-link class="nav-link" to="/login">Login</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" to="/categories">Categories</router-link>
                         </li>
 
                     </ul>

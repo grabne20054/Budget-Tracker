@@ -109,7 +109,7 @@ export const useAuthStore = defineStore('auth', () => {
         .finally( () => {
             setTimeout(() => {
                 if (isAuthenticated.value){
-                    router.push('/profile');
+                    router.push('/');
                     console.log('pushed to profile');
                 }
                 else{

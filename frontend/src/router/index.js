@@ -5,6 +5,7 @@ import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import LogoutView from '../views/LogoutView.vue'
 import RefreshView from '../views/RefreshView.vue'
+import CategoriesView from '../views/CategoriesView.vue'
 import { useAuthStore } from '../store/auth'
 
 const routes = [
@@ -39,6 +40,11 @@ const routes = [
         name: 'Refresh',
         component: RefreshView,
     },
+    {
+        path: '/categories',
+        name: 'Categories',
+        component: CategoriesView,
+    }
 ]
 
 const router = createRouter({
