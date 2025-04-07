@@ -50,7 +50,7 @@ export default {
   },
   data() {
     return {
-      selectedType: 'income' // default selection
+      selectedType: 'income'
     };
   },
   computed: {
@@ -61,6 +61,12 @@ export default {
       return types[this.type] || Line;
     },
     chartData() {
+      if (!this.data || this.data.length === 0) {
+        return {
+          labels: [],
+          datasets: []
+        };
+      }
       const filteredData = this.data.filter(item => item.type === this.selectedType);
 
       return {
@@ -102,7 +108,6 @@ export default {
 <style scoped>
 .chart-wrapper {
   width: 100%;
-  max-width: 1000px;
   margin: auto;
 }
 
