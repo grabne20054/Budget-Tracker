@@ -50,6 +50,10 @@ const addCategory = async () => {
 };
 
 const removeCategory = async id => {
+    if (!confirm('Are you sure you want to delete this category? This will also delete all transactions associated with this category.')) {
+        alert('Category deletion cancelled.');
+        return;
+    }
     await deleteCategory(id);
     router.push('/refresh');
 }

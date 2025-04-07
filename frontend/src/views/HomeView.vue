@@ -34,18 +34,20 @@
         </table>
     </div>
 
+    
+    </div>
+
     <div class="chart">
     <Chart :data="transactionsList.value" ></Chart>
-    </div>
     </div>
 
         
 </template>
   
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 import { useFetchAccounts, registerAccount } from '../store/accounts';
-import { useFetchTransactions, registerTransaction } from '../store/transactions';
+import { useFetchTransactions } from '../store/transactions';
 import { useFetchCategories } from '../store/categories';
 import router from '../router';
 import Chart from '../components/Chart.vue';
@@ -55,25 +57,24 @@ const limit = 5;
 
 let { accountList } = useFetchAccounts();
 let { transactionsList } = useFetchTransactions(limit);
-let { categoriesList } = useFetchCategories();
 
 const submit = async () => {
     await registerAccount();
 };
 
-
 onMounted(() => {
     submit();
-    
-
-    console.log(transactionsList);
-
 });
 </script>
 
 <style scoped>
 .chart {
+    width: 50%;
+    height: 50%;
     display: flex;
-    justify-content:baseline;
+    margin: auto;
+}
+.type-select {
+    margin-bottom: 20px;
 }
 </style>
