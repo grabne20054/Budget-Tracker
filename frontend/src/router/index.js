@@ -6,6 +6,7 @@ import RegisterView from '../views/RegisterView.vue'
 import LogoutView from '../views/LogoutView.vue'
 import RefreshView from '../views/RefreshView.vue'
 import CategoriesView from '../views/CategoriesView.vue'
+import TransactionsView from '../views/TransactionsView.vue'
 import { useAuthStore } from '../store/auth'
 
 const routes = [
@@ -44,6 +45,12 @@ const routes = [
         path: '/categories',
         name: 'Categories',
         component: CategoriesView,
+    },
+    {
+        path: '/transactions',
+        name: 'Transactions',
+        component: TransactionsView,
+
     }
 ]
 

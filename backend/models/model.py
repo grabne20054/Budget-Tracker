@@ -45,7 +45,7 @@ class TransactionsModels(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     paymentreason = Column(String(50), nullable=False)
     created = Column(DateTime, default=datetime.now())
-    amount = Column(Integer, nullable=False)
+    amount = Column(Float, default=0.0, nullable=False)
     finished = Column(Boolean)
     type = Column(String(10), nullable=False)
 

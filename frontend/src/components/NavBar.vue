@@ -27,7 +27,9 @@
                         <li class="nav-item">
                             <router-link class="nav-link" to="/categories">Categories</router-link>
                         </li>
-
+                        <li class="nav-item">
+                            <router-link class="nav-link" to="/transactions">Transactions</router-link>
+                        </li>
                     </ul>
                 </div>
             </div>

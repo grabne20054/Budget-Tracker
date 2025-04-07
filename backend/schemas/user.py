@@ -7,9 +7,13 @@ from pydantic import BaseModel
 
 class Base(BaseModel):
     username:str
-    account_id: int
 
 
 class Register(Base):
     password: str
 
+class Password(Base):
+    password:str
+
+class Birthday(Base):
+    birthday:str

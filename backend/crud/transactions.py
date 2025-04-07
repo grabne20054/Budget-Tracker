@@ -16,10 +16,11 @@ class TransactionCRUD:
     def __init__(self, db_session: AsyncSession = None):
         self.db_session = db_session
 
-    async def get_transcations_by_account(self, account_id: int):
-        stmt = select(TransactionsModels).where(TransactionsModels.account_id == account_id)
+    async def get_transactions_by_account(self, account_id: int, limit: int = 5):
+        stmt = select(TransactionsModels).where(TransactionsModels.account_id == account_id).order_by(TransactionsModels.created.desc())
         result = await self.db_session.execute(stmt)
         transactions = result.scalars().all()
+        transactions = transactions[:limit]
         return transactions
     
     async def get_transactions_by_category_and_account(self, category_id: int, account_id: int):
@@ -53,7 +54,7 @@ class TransactionCRUD:
         stmt.execution_options(synchronize_session="fetch")
         await self.db_session.execute(stmt)
 
-    async def update_amount(self, transaction_id:int, amount:int, account_db: AccountsCRUD):
+    async def update_amount(self, transaction_id:int, amount:float, account_db: AccountsCRUD):
         stmt = (
             update(TransactionsModels)
             .where(TransactionsModels.id == transaction_id)
@@ -64,8 +65,6 @@ class TransactionCRUD:
 
         transaction = await self.get_transaction_by_id(transaction_id)
         await account_db.update_balance(transaction)
-
-        
 
     async def update_category(self, transaction_id:int, category_id: int):
         stmt = (

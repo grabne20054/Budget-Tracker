@@ -19,6 +19,8 @@ class AccountsCRUD:
         stmt = select(AccountsModels).where(AccountsModels.username == username)
         result = await self.db_session.execute(stmt)
         account = result.scalars().first()
+        if account:
+            account.balance = round(account.balance, 2)
         return account
 
     async def create_account(self, username: str):

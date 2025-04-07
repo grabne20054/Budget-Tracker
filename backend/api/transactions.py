@@ -25,10 +25,10 @@ async def create(
 
 @router.get("")
 async def get_transactions_by_account(
-    current_user: user_schema.Base = Depends(get_current_user), db: TransactionCRUD = Depends(get_transaction_crud), account_db: AccountsCRUD = Depends(get_account_crud)
+    current_user: user_schema.Base = Depends(get_current_user), db: TransactionCRUD = Depends(get_transaction_crud), account_db: AccountsCRUD = Depends(get_account_crud), limit: int = 5
 ):
     account = await account_db.get_account_of_user(current_user.username)
-    transactions = await db.get_transcations_by_account(account_id=account.id)
+    transactions = await db.get_transactions_by_account(account_id=account.id, limit=limit)
 
     return transactions
 
@@ -51,7 +51,7 @@ async def update_paymentreason(
 
 @router.put("/amount")
 async def update_amount(
-    transactionId: int, amount: int, db: TransactionCRUD = Depends(get_transaction_crud), account_db: AccountsCRUD = Depends(get_account_crud)
+    transactionId: int, amount: float, db: TransactionCRUD = Depends(get_transaction_crud), account_db: AccountsCRUD = Depends(get_account_crud)
 ):
     await db.update_amount(transaction_id=transactionId, amount=amount, account_db=account_db)
     return status.HTTP_200_OK
