@@ -33,6 +33,10 @@
             </tbody>
         </table>
     </div>
+
+    <div class="chart">
+    <Chart :data="transactionsList.value" ></Chart>
+    </div>
     </div>
 
         
@@ -44,6 +48,8 @@ import { useFetchAccounts, registerAccount } from '../store/accounts';
 import { useFetchTransactions, registerTransaction } from '../store/transactions';
 import { useFetchCategories } from '../store/categories';
 import router from '../router';
+import Chart from '../components/Chart.vue';
+
 
 const limit = 5;
 
@@ -58,5 +64,16 @@ const submit = async () => {
 
 onMounted(() => {
     submit();
+    
+
+    console.log(transactionsList);
+
 });
 </script>
+
+<style scoped>
+.chart {
+    display: flex;
+    justify-content:baseline;
+}
+</style>
