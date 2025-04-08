@@ -3,13 +3,12 @@
         <table class="table">
             <thead>
             <tr>
-                <th colspan="3">Last 5 Transactions</th>
+                <th colspan="3">Transactions</th>
             </tr>
             <tr>
                 <th>Payment Reason</th>
                 <th>Amount</th>
                 <th>Type</th>
-                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
